@@ -1,0 +1,565 @@
+{
+	"info": {
+		"_postman_id": "94b815de-d289-4495-85f4-7b2363f8e3ca",
+		"name": "Dummy Rest Api Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22006283"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"item": [
+				{
+					"name": "Succeeds with name and job",
+					"item": [
+						{
+							"name": "Create User",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let userFullName = pm.variables.replaceIn(\"{{$randomFullName}}\");\r",
+											"pm.environment.set(\"userFullName\", userFullName);\r",
+											"let userJobTitle = pm.variables.replaceIn(\"{{$randomJobTitle}}\");\r",
+											"pm.environment.set(\"userJobTitle\", userJobTitle);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let userFullName = pm.environment.get(\"userFullName\");\r",
+											"let userJobTitle = pm.environment.get(\"userJobTitle\");\r",
+											"\r",
+											"pm.test(\"User created with correct name\", function () {\r",
+											"    pm.expect(response.name).to.equal(userFullName);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User created with correct job title\", function () { \r",
+											"    pm.expect(response.job).to.equal(userJobTitle);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User name and job name are different\", function () {\r",
+											"    pm.expect(response.name).to.not.equal(response.job);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id is not null or undefined\", function () { \r",
+											"    pm.expect(response.id).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"createdAt is not null or undefined\", function () { \r",
+											"    pm.expect(response.createdAt).to.not.be.oneOf([null, undefined]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"{{userFullName}}\",\r\n    \"job\": \"{{userJobTitle}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Succeeds with name only",
+					"item": [
+						{
+							"name": "Create User",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let userFullName = pm.variables.replaceIn(\"{{$randomFullName}}\");\r",
+											"pm.environment.set(\"userFullName\", userFullName);\r",
+											"let userJobTitle = pm.variables.replaceIn(\"{{$randomJobTitle}}\");\r",
+											"pm.environment.set(\"userJobTitle\", userJobTitle);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let userFullName = pm.environment.get(\"userFullName\");\r",
+											"let userJobTitle = pm.environment.get(\"userJobTitle\");\r",
+											"\r",
+											"pm.test(\"User created with correct name\", function () {\r",
+											"    pm.expect(response.name).to.equal(userFullName);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id is not null or undefined\", function () { \r",
+											"    pm.expect(response.id).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"createdAt is not null or undefined\", function () { \r",
+											"    pm.expect(response.createdAt).to.not.be.oneOf([null, undefined]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"{{userFullName}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Succeeds with job only",
+					"item": [
+						{
+							"name": "Create User",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let userFullName = pm.variables.replaceIn(\"{{$randomFullName}}\");\r",
+											"pm.environment.set(\"userFullName\", userFullName);\r",
+											"let userJobTitle = pm.variables.replaceIn(\"{{$randomJobTitle}}\");\r",
+											"pm.environment.set(\"userJobTitle\", userJobTitle);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let userFullName = pm.environment.get(\"userFullName\");\r",
+											"let userJobTitle = pm.environment.get(\"userJobTitle\");\r",
+											"\r",
+											"pm.test(\"User created with correct job title\", function () { \r",
+											"    pm.expect(response.job).to.equal(userJobTitle);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id is not null or undefined\", function () { \r",
+											"    pm.expect(response.id).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"createdAt is not null or undefined\", function () { \r",
+											"    pm.expect(response.createdAt).to.not.be.oneOf([null, undefined]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"job\": \"{{userJobTitle}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Succeeds with hobby",
+					"item": [
+						{
+							"name": "Create User",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let userHobby = pm.variables.replaceIn(\"{{$randomBsBuzz}}\");\r",
+											"pm.environment.set(\"userHobby\", userHobby);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let userHobby = pm.environment.get(\"userHobby\");\r",
+											"\r",
+											"pm.test(\"User created with correct hobby\", function () {\r",
+											"    pm.expect(response.hobby).to.equal(userHobby);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id is not null or undefined\", function () { \r",
+											"    pm.expect(response.id).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"createdAt is not null or undefined\", function () { \r",
+											"    pm.expect(response.createdAt).to.not.be.oneOf([null, undefined]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"hobby\": \"{{userHobby}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Succeeds with no body",
+					"item": [
+						{
+							"name": "Create User",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let userHobby = pm.variables.replaceIn(\"{{$randomBsBuzz}}\");\r",
+											"pm.environment.set(\"userHobby\", userHobby);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"id is not null or undefined\", function () { \r",
+											"    pm.expect(response.id).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"createdAt is not null or undefined\", function () { \r",
+											"    pm.expect(response.createdAt).to.not.be.oneOf([null, undefined]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Fails with array of names",
+					"item": [
+						{
+							"name": "Create User",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let userFullName1 = pm.variables.replaceIn(\"{{$randomFullName}}\");\r",
+											"let userFullName2 = pm.variables.replaceIn(\"{{$randomFullName}}\");\r",
+											"pm.environment.set(\"userFullNames\", [userFullName1, userFullName2]);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Fails POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": {{userFullNames}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Fails with array of jobs",
+					"item": [
+						{
+							"name": "Create User",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let userJob1 = pm.variables.replaceIn(\"{{$randomJobTitle}}\");\r",
+											"let userJob2 = pm.variables.replaceIn(\"{{$randomJobTitle}}\");\r",
+											"pm.environment.set(\"userJobs\", [userJob1, userJob2]);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Fails POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"job\": {{userJobs}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Fails with array of hobbies",
+					"item": [
+						{
+							"name": "Create User",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let userHobby1 = pm.variables.replaceIn(\"{{$randomBsBuzz}}\");;\r",
+											"let userHobby2 = pm.variables.replaceIn(\"{{$randomBsBuzz}}\");\r",
+											"pm.environment.set(\"userHobbies\", [userHobby1, userHobby2]);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Fails POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"hobby\": {{userHobbies}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
