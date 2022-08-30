@@ -562,6 +562,7 @@
 			]
 		},
 		{
+<<<<<<< HEAD
 			"name": "List User",
 			"item": [
 				{
@@ -569,6 +570,15 @@
 					"item": [
 						{
 							"name": "Get Uset List",
+=======
+			"name": "Get User",
+			"item": [
+				{
+					"name": "Fails for new user id",
+					"item": [
+						{
+							"name": "Create User",
+>>>>>>> 6916fc3 (added get user tests)
 							"event": [
 								{
 									"listen": "prerequest",
@@ -587,6 +597,7 @@
 									"script": {
 										"exec": [
 											"pm.test(\"Successful POST request\", function () {\r",
+<<<<<<< HEAD
 											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
 											"});\r",
 											"\r",
@@ -654,11 +665,20 @@
 											"pm.test(\"support text is not null or undefined\", function () { \r",
 											"    pm.expect(response.support.text).to.not.be.oneOf([null, undefined]);\r",
 											"});"
+=======
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"\r",
+											"pm.environment.set(\"userId\", response.id);"
+>>>>>>> 6916fc3 (added get user tests)
 										],
 										"type": "text/javascript"
 									}
 								}
 							],
+<<<<<<< HEAD
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -668,6 +688,14 @@
 								"body": {
 									"mode": "raw",
 									"raw": "",
+=======
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"{{userFullName}}\",\r\n    \"job\": \"{{userJobTitle}}\"\r\n}",
+>>>>>>> 6916fc3 (added get user tests)
 									"options": {
 										"raw": {
 											"language": "json"
@@ -675,7 +703,11 @@
 									}
 								},
 								"url": {
+<<<<<<< HEAD
 									"raw": "https://reqres.in/api/users?page=2",
+=======
+									"raw": "https://reqres.in/api/users",
+>>>>>>> 6916fc3 (added get user tests)
 									"protocol": "https",
 									"host": [
 										"reqres",
@@ -684,12 +716,136 @@
 									"path": [
 										"api",
 										"users"
+<<<<<<< HEAD
 									],
 									"query": [
 										{
 											"key": "page",
 											"value": "2"
 										}
+=======
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let userId = pm.environment.get(\"userId\");\r",
+											"\r",
+											"pm.test(\"Response includes data\", function () {\r",
+											"    pm.expect(response.data).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response includes support\", function () {\r",
+											"    pm.expect(response.data).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User Id matches expected Id\", function () { \r",
+											"    pm.expect(response.data.id).to.equal(userId);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://reqres.in/api/users/{{userId}}",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Succeeds for user 1",
+					"item": [
+						{
+							"name": "Get User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let userId = 1;\r",
+											"\r",
+											"pm.test(\"Response includes data\", function () {\r",
+											"    pm.expect(response.data).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response includes support\", function () {\r",
+											"    pm.expect(response.data).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User Id matches expected Id\", function () { \r",
+											"    pm.expect(response.data.id).to.equal(userId);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response data included email\", function () {\r",
+											"    pm.expect(response.data.email).to.include(\"@\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response data included first name\", function () {\r",
+											"    pm.expect(response.data.first_name).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response data included last name\", function () {\r",
+											"    pm.expect(response.data.last_name).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response data avatar contains jpg\", function () {\r",
+											"    pm.expect(response.data.avatar).to.include([\".jpg\"]);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://reqres.in/api/users/1",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users",
+										"1"
+>>>>>>> 6916fc3 (added get user tests)
 									]
 								}
 							},
