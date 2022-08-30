@@ -562,15 +562,6 @@
 			]
 		},
 		{
-<<<<<<< HEAD
-			"name": "List User",
-			"item": [
-				{
-					"name": "Succeeds with list retrieval",
-					"item": [
-						{
-							"name": "Get Uset List",
-=======
 			"name": "Get User",
 			"item": [
 				{
@@ -578,7 +569,6 @@
 					"item": [
 						{
 							"name": "Create User",
->>>>>>> 6916fc3 (added get user tests)
 							"event": [
 								{
 									"listen": "prerequest",
@@ -597,105 +587,23 @@
 									"script": {
 										"exec": [
 											"pm.test(\"Successful POST request\", function () {\r",
-<<<<<<< HEAD
-											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
-											"});\r",
-											"\r",
-											"const response = pm.response.json();\r",
-											"let users = response.data;\r",
-											"\r",
-											"\r",
-											"\r",
-											"pm.test(\"User list contains pages\", function () {\r",
-											"    pm.expect(response.page).to.not.be.oneOf([null, undefined]);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"User list contains users\", function () {\r",
-											"    pm.expect(response.total).to.not.be.oneOf([null, undefined]);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"User list contains tptal pages\", function () {\r",
-											"    pm.expect(response.total_pages).to.not.be.oneOf([null, undefined]);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"support is not null or undefined\", function () { \r",
-											"    pm.expect(response.support).to.not.be.oneOf([null, undefined]);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"no users are null or undefined\", function () {\r",
-											"    users.forEach(user => {\r",
-											"        pm.expect(user).to.not.be.oneOf([null, undefined]);\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"pm.test(\"no users id are null or undefined\", function () {\r",
-											"    users.forEach(user => {\r",
-											"        pm.expect(user.id).to.not.be.oneOf([null, undefined]);\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"pm.test(\"all users emails contain @\", function () {\r",
-											"    users.forEach(user => {\r",
-											"        pm.expect(user.email).to.contain(\"@\");\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"pm.test(\"no users first name are undefined\", function () {\r",
-											"    users.forEach(user => {\r",
-											"        pm.expect(user.first_name).to.not.be.oneOf([null, undefined]);\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"pm.test(\"no users last name are undefined\", function () {\r",
-											"    users.forEach(user => {\r",
-											"        pm.expect(user.last_name).to.not.be.oneOf([null, undefined]);\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"pm.test(\"all users avatars .jpg\", function () {\r",
-											"    users.forEach(user => {\r",
-											"        pm.expect(user.avatar).to.contain.oneOf([\".jpg\", \".png\", \".gif\"]);\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"pm.test(\"support url is not null or undefined\", function () { \r",
-											"    pm.expect(response.support.url).to.not.be.oneOf([null, undefined]);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"support text is not null or undefined\", function () { \r",
-											"    pm.expect(response.support.text).to.not.be.oneOf([null, undefined]);\r",
-											"});"
-=======
 											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
 											"});\r",
 											"\r",
 											"const response = pm.response.json();\r",
 											"\r",
 											"pm.environment.set(\"userId\", response.id);"
->>>>>>> 6916fc3 (added get user tests)
 										],
 										"type": "text/javascript"
 									}
 								}
 							],
-<<<<<<< HEAD
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-=======
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"name\": \"{{userFullName}}\",\r\n    \"job\": \"{{userJobTitle}}\"\r\n}",
->>>>>>> 6916fc3 (added get user tests)
 									"options": {
 										"raw": {
 											"language": "json"
@@ -703,11 +611,7 @@
 									}
 								},
 								"url": {
-<<<<<<< HEAD
-									"raw": "https://reqres.in/api/users?page=2",
-=======
 									"raw": "https://reqres.in/api/users",
->>>>>>> 6916fc3 (added get user tests)
 									"protocol": "https",
 									"host": [
 										"reqres",
@@ -716,14 +620,6 @@
 									"path": [
 										"api",
 										"users"
-<<<<<<< HEAD
-									],
-									"query": [
-										{
-											"key": "page",
-											"value": "2"
-										}
-=======
 									]
 								}
 							},
@@ -845,7 +741,567 @@
 										"api",
 										"users",
 										"1"
->>>>>>> 6916fc3 (added get user tests)
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "List User",
+			"item": [
+				{
+					"name": "Succeeds with list retrieval",
+					"item": [
+						{
+							"name": "Get Uset List",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let userFullName = pm.variables.replaceIn(\"{{$randomFullName}}\");\r",
+											"pm.environment.set(\"userFullName\", userFullName);\r",
+											"let userJobTitle = pm.variables.replaceIn(\"{{$randomJobTitle}}\");\r",
+											"pm.environment.set(\"userJobTitle\", userJobTitle);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let users = response.data;\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"User list contains pages\", function () {\r",
+											"    pm.expect(response.page).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User list contains users\", function () {\r",
+											"    pm.expect(response.total).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User list contains tptal pages\", function () {\r",
+											"    pm.expect(response.total_pages).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"support is not null or undefined\", function () { \r",
+											"    pm.expect(response.support).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"no users are null or undefined\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user).to.not.be.oneOf([null, undefined]);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"no users id are null or undefined\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user.id).to.not.be.oneOf([null, undefined]);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"all users emails contain @\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user.email).to.contain(\"@\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"no users first name are undefined\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user.first_name).to.not.be.oneOf([null, undefined]);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"no users last name are undefined\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user.last_name).to.not.be.oneOf([null, undefined]);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"all users avatars .jpg\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user.avatar).to.contain.oneOf([\".jpg\", \".png\", \".gif\"]);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"support url is not null or undefined\", function () { \r",
+											"    pm.expect(response.support.url).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"support text is not null or undefined\", function () { \r",
+											"    pm.expect(response.support.text).to.not.be.oneOf([null, undefined]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users?page=2",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Delete User",
+			"item": [
+				{
+					"name": "Fails for new user id",
+					"item": [
+						{
+							"name": "Create User",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let userFullName = pm.variables.replaceIn(\"{{$randomFullName}}\");\r",
+											"pm.environment.set(\"userFullName\", userFullName);\r",
+											"let userJobTitle = pm.variables.replaceIn(\"{{$randomJobTitle}}\");\r",
+											"pm.environment.set(\"userJobTitle\", userJobTitle);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"\r",
+											"pm.environment.set(\"userId\", response.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"{{userFullName}}\",\r\n    \"job\": \"{{userJobTitle}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful DELETE request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([204]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://reqres.in/api/users/{userId}}",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users",
+										"{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Deleted User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let userId = pm.environment.get(\"userId\");\r",
+											"\r",
+											"pm.test(\"Response includes data\", function () {\r",
+											"    pm.expect(response.data).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response includes support\", function () {\r",
+											"    pm.expect(response.data).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User Id matches expected Id\", function () { \r",
+											"    pm.expect(response.data.id).to.equal(userId);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://reqres.in/api/users/{{userId}}",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Fails for deleting user not in list",
+					"item": [
+						{
+							"name": "Get User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let userId = pm.environment.get(\"userId\");\r",
+											"\r",
+											"pm.test(\"Response includes data\", function () {\r",
+											"    pm.expect(response.data).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response includes support\", function () {\r",
+											"    pm.expect(response.data).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User Id matches expected Id\", function () { \r",
+											"    pm.expect(response.data.id).to.equal(userId);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://reqres.in/api/users/{{userId}}",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([204]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://reqres.in/api/users/{{userId}}",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Deleted User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let userId = pm.environment.get(\"userId\");\r",
+											"\r",
+											"pm.test(\"Response includes data\", function () {\r",
+											"    pm.expect(response.data).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response includes support\", function () {\r",
+											"    pm.expect(response.data).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User Id matches expected Id\", function () { \r",
+											"    pm.expect(response.data.id).to.equal(userId);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://reqres.in/api/users/{{userId}}",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Fails for user removed from list",
+					"item": [
+						{
+							"name": "Get User Pre Delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let userId = 1;\r",
+											"\r",
+											"pm.test(\"Response includes data\", function () {\r",
+											"    pm.expect(response.data).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User Id matches expected Id\", function () { \r",
+											"    pm.expect(response.data.id).to.equal(userId);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://reqres.in/api/users/1",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful DELETE request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([204]);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://reqres.in/api/users/1",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User List Post Delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let users = response.data;\r",
+											"let userId = 1;\r",
+											"\r",
+											"pm.test(\"no users id are 1\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user.id).to.not.equal(userId);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://reqres.in/api/users",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
 									]
 								}
 							},
