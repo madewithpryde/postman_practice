@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "94b815de-d289-4495-85f4-7b2363f8e3ca",
+		"_postman_id": "4960f11a-ead2-426a-b93a-e6c1f658dc71",
 		"name": "Dummy Rest Api Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22006283"
@@ -552,6 +552,144 @@
 									"path": [
 										"api",
 										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "List User",
+			"item": [
+				{
+					"name": "Succeeds with list retrieval",
+					"item": [
+						{
+							"name": "Get Uset List",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let userFullName = pm.variables.replaceIn(\"{{$randomFullName}}\");\r",
+											"pm.environment.set(\"userFullName\", userFullName);\r",
+											"let userJobTitle = pm.variables.replaceIn(\"{{$randomJobTitle}}\");\r",
+											"pm.environment.set(\"userJobTitle\", userJobTitle);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"let users = response.data;\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"User list contains pages\", function () {\r",
+											"    pm.expect(response.page).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User list contains users\", function () {\r",
+											"    pm.expect(response.total).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User list contains tptal pages\", function () {\r",
+											"    pm.expect(response.total_pages).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"support is not null or undefined\", function () { \r",
+											"    pm.expect(response.support).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"no users are null or undefined\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user).to.not.be.oneOf([null, undefined]);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"no users id are null or undefined\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user.id).to.not.be.oneOf([null, undefined]);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"all users emails contain @\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user.email).to.contain(\"@\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"no users first name are undefined\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user.first_name).to.not.be.oneOf([null, undefined]);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"no users last name are undefined\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user.last_name).to.not.be.oneOf([null, undefined]);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"all users avatars .jpg\", function () {\r",
+											"    users.forEach(user => {\r",
+											"        pm.expect(user.avatar).to.contain.oneOf([\".jpg\", \".png\", \".gif\"]);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"support url is not null or undefined\", function () { \r",
+											"    pm.expect(response.support.url).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"support text is not null or undefined\", function () { \r",
+											"    pm.expect(response.support.text).to.not.be.oneOf([null, undefined]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users?page=2",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										}
 									]
 								}
 							},
