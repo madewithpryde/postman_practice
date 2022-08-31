@@ -1310,6 +1310,130 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Update User",
+			"item": [
+				{
+					"name": "Fails update with name and job",
+					"item": [
+						{
+							"name": "Update User Name and Jobjob",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"User created with correct name\", function () {\r",
+											"    pm.expect(response.name).to.equal(\"Robert Smith\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User created with correct job title\", function () { \r",
+											"    pm.expect(response.job).to.equal(\"Lead Singer\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"updatedAt is not null or undefined\", function () { \r",
+											"    pm.expect(response.updatedAt).to.not.be.oneOf([null, undefined]);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Robert Smith\",\r\n    \"job\": \"Lead Singer\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://reqres.in/api/users/1",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Updated User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful Get request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"User created with correct name\", function () {\r",
+											"    pm.expect(response.name).to.equal(\"Robert Smith\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User created with correct job title\", function () { \r",
+											"    pm.expect(response.job).to.equal(\"Lead Singer\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://reqres.in/api/users/1",
+									"protocol": "https",
+									"host": [
+										"reqres",
+										"in"
+									],
+									"path": [
+										"api",
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	]
 }
